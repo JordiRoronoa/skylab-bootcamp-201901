@@ -1,41 +1,89 @@
-'use strict';
+'use strict'
 
 /**
- * Duckling API client.
+ * Spotify API client.
  * 
  * @version 1.0.0
  */
-var spotifyApi = {
-    
+const spotifyApi = {
+    token: 'NO-TOKEN',
+
     /**
      * Searches ducklings.
      * 
-     * @param {string} query - The text to match on search.
+     * @param {string} query - The text to match on artists search.
      * @param {function} callback - The expression to evaluate on response. If error first 
      * argument informs the error message, othwerwise first argument is undefined and second argument provides the matching 
      * results.
      */
-    searchArtists (query, callback) {
- 
+    searchArtists(query, callback) {
         fetch(`https://api.spotify.com/v1/search?q=${query}&type=artist`, {
             method: 'GET',
             headers: {
-                authorization: 'Bearer BQD7CRlEe0DEbl3toUHzxfR4EI7HPuDonijKtaFA_EiRtcK4FNmuVQ6c2LJd927yTJcjVR2WGfxPWQgwnEO6KWKf-okAN9tbEC4OCKKnrnZJiJLaOGa5_x1OAiVQjj0mzqnDh2tCZ_COp5E'
-            },
-        })
-        .then(res => res.json())
-        .then(({artists: {items}}) => callback (undefined, items))
-    },
-
-    retrieveAlbums (artistId, callback) {
-
-        fetch(`https://api.spotify.com/v1/search?q=${artistId}&type=artist`, {
-            method: 'GET',
-            headers: {
-                authorization: 'Bearer BQD7CRlEe0DEbl3toUHzxfR4EI7HPuDonijKtaFA_EiRtcK4FNmuVQ6c2LJd927yTJcjVR2WGfxPWQgwnEO6KWKf-okAN9tbEC4OCKKnrnZJiJLaOGa5_x1OAiVQjj0mzqnDh2tCZ_COp5E'
+                authorization: `Bearer ${this.token}`
             }
         })
-        .then(res => res.json())
-        .then(({items}) => callback (undefined, items))
+            .then(res => res.json())
+            .then(({ artists: { items } }) => callback(undefined, items))
+            .catch(callback)
+    },
+
+    /**
+     * Retrieves albums from artist.
+     * 
+     * @param {string} artistId - The artist to retrieve albums from.
+     * @param {*} callback - callback - The expression to evaluate on response. If error first 
+     * argument informs the error message, othwerwise first argument is undefined and second argument provides the matching 
+     * results.
+     */
+    retrieveAlbums(artistId, callback) {
+        fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${this.token}`
+            }
+        })
+            .then(res => res.json())
+            .then(({ items }) => callback(undefined, items))
+            .catch(callback)
+    },
+
+        /**
+     * Retrieves tracks from artist.
+     * 
+     * @param {string} artistId - The albums to retrieve tracks from.
+     * @param {*} callback - callback - The expression to evaluate on response. If error first 
+     * argument informs the error message, othwerwise first argument is undefined and second argument provides the matching 
+     * results.
+     */
+    retrieveTracks(albumId, callback) {
+        fetch(`https://api.spotify.com/v1/albums/${albumId}/tracks`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${this.token}`
+            }
+        })
+            .then(res => res.json())
+            .then(({ items }) => callback(undefined, items))
+            .catch(callback)
+    },
+        /**
+     * Plays tracks from album.
+     * 
+     * @param {string} artistId - The albums to retrieve tracks from.
+     * @param {*} callback - callback - The expression to evaluate on response. If error first 
+     * argument informs the error message, othwerwise first argument is undefined and second argument provides the matching 
+     * results.
+     */
+    playTrack(trackId, callback) {
+        fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${this.token}`
+            }
+        })
+            .then(res => res.json())
+            .then(({ items }) => callback(undefined, items))
+            .catch(callback)
     }
-};
+}
