@@ -46,11 +46,13 @@ class SearchPanel extends Panel {
 class ArtistsPanel extends Panel {
     constructor() {
         super($(`<section class="results container">
+    <button type="submit" class="btn btn-info">Go back</button>
     <h3>Artists</h3>
     <ul class =row container></ul>
 </section`))
 
         this.__$list__ = this.$container.find('ul')
+        this.__$buttonBack__ = this.$container.find('button')
     }
 
     set artists(artists) {
@@ -76,6 +78,10 @@ class ArtistsPanel extends Panel {
         this.__onArtistSelected__ = callback
     }
 
+    set onGoBack(callback) {
+        this.__$buttonBack__.on('click', callback)
+    }
+
     clear() {
         this.__$list__.empty()
     }
@@ -84,11 +90,13 @@ class ArtistsPanel extends Panel {
 class AlbumPanel extends Panel {
     constructor() {
         super($(`<section class="results container">
+        <button type="submit" class="btn btn-info">Go back</button>
         <h3>Albums</h3>
         <ul class = row></ul>
     </section`))
 
         this.__$list__ = this.$container.find('ul')
+        this.__$buttonBack__ = this.$container.find('button')
     }
 
     set albums(albums) {
@@ -111,6 +119,10 @@ class AlbumPanel extends Panel {
         this.__onAlbumSelected__ = callback
     }
 
+    set onGoBack (callback) {
+        this.__$buttonBack__.on('click', callback)
+    }
+
     clear() {
         this.__$list__.empty()
     }
@@ -121,11 +133,13 @@ class TrackPanel extends Panel {
     constructor() {
 
         super($(`<section class="results container">
+        <button type="submit" class="btn btn-info">Go back</button>
         <h3>Tracks</h3>
         <ul></ul>
     </section`))
 
         this.__$list__ = this.$container.find('ul')
+        this.__$buttonBack__ = this.$container.find('button')
     }
 
     set tracks(tracks) {
@@ -142,5 +156,9 @@ class TrackPanel extends Panel {
     }
     clear() {
         this.__$list__.empty()
+    }
+
+    set onGoBack (callback) {
+        this.__$buttonBack__.on('click', callback)
     }
 }

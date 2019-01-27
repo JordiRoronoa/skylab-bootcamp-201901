@@ -1,4 +1,4 @@
-spotifyApi.token = 'BQBySmLGG86CzU0sTGCqRzcM8tUXHcc3ctkTQ8YuViKp3L-xfxC5oBj6366HxhxTCuTM-mDr57A4wP2o-7anNu5OFgBApfc--7e16FMC2tuHiswS9ASYwJK7FhRn81dZls3q37xU8LnSj7k'
+spotifyApi.token = 'BQCsl85neJTaONIQFPCBdLoPriecwLZW-cpJFqMY_qD7WYkKFHysHOJvNee-Cr0Rx2cdVwWY0xfItgiFfQZ_duJNIpffn6p4imWD-pbNLaNGj_KIVSsnwLdG3fvFqjNw3P9eq1CTc-4fjpI'
 
 const searchPanel = new SearchPanel
 const artistsPanel = new ArtistsPanel
@@ -49,7 +49,7 @@ artistsPanel.onArtistSelected = function (artistId) {
             if (error) searchPanel.error = error.message
             else {
 
-                albumPanel.clear()
+                // albumPanel.clear()
 
                 artistsPanel.hide();
 
@@ -64,6 +64,11 @@ artistsPanel.onArtistSelected = function (artistId) {
     }
 }
 
+artistsPanel.onGoBack = function (){
+    artistsPanel.clear()
+    artistsPanel.hide()
+}
+
 albumPanel.onAlbumSelected = function (albumId) {
 
     try {
@@ -71,7 +76,7 @@ albumPanel.onAlbumSelected = function (albumId) {
             if (error) searchPanel.error = error.message
             else {
 
-                albumPanel.clear()
+                // albumPanel.clear()
 
                 albumPanel.hide();
 
@@ -83,4 +88,16 @@ albumPanel.onAlbumSelected = function (albumId) {
         })
     } catch (err) {
     }
+}
+
+albumPanel.onGoBack = function (){
+    albumPanel.clear()
+    albumPanel.hide()
+    artistsPanel.show()
+}
+
+trackPanel.onGoBack = function (){
+    trackPanel.clear()
+    trackPanel.hide()
+    albumPanel.show()
 }
