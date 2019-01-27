@@ -14,11 +14,17 @@ class Panel {
 
 class SearchPanel extends Panel {
     constructor() {
-        super($(`<section class="search container">
-        <h2>Search</h2>
+        super($(`<section class="search container">    
     <form>
-        <input type="text" name="query" placeholder="Search an artist...">
-        <button type="submit">Search</button>
+    <div class="row">
+    <div class=" col input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"><img class="icon" src="https://starrsystems.net/wp-content/uploads/2016/07/Services-Music-Systems-page.png"></span>
+        </div>
+        <input type="text" class="form-control" name="query" placeholder="Search an artist..." aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    </div>
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </div>
     </form>
 </section>`))
 
@@ -41,15 +47,20 @@ class ArtistsPanel extends Panel {
     constructor() {
         super($(`<section class="results container">
     <h3>Artists</h3>
-    <ul></ul>
+    <ul class =row container></ul>
 </section`))
 
         this.__$list__ = this.$container.find('ul')
     }
 
     set artists(artists) {
-        artists.forEach(({ id, name }) => {
-            const $item = $(`<li data-id=${id}>${name}</li>`)
+        artists.forEach(({ id, name, images, followers, genres }) => {
+            const genre = genres[0] ? genres[0] : 'Not available'
+            const image = images[0] ? images[0].url : 'https://editorial.upc.edu.pe/wp-content/uploads/2018/08/no-photo.png'
+            const $item = $(`<div class="item" data-id=${id}><img src="${image}" class="receivedImg">
+            <li data-id=${id} class=title >${name}</li><li>Followers: ${followers.total}</li>
+            <li>Main Genre: ${genre}</li>
+            </div>`)
 
             $item.click(() => {
                 const id = $item.data('id')
@@ -68,22 +79,24 @@ class ArtistsPanel extends Panel {
     clear() {
         this.__$list__.empty()
     }
-
 }
 
 class AlbumPanel extends Panel {
     constructor() {
         super($(`<section class="results container">
         <h3>Albums</h3>
-        <ul></ul>
+        <ul class = row></ul>
     </section`))
 
         this.__$list__ = this.$container.find('ul')
     }
 
     set albums(albums) {
-        albums.forEach(({ id, name }) => {
-            const $item = $(`<li data-id=${id}>${name}</li>`)
+        albums.forEach(({ id, name, images, release_date, total_tracks }) => {
+            const $item = $(`<div data-id=${id} class="item"><img src="${images[0].url}" class ="receivedImg">
+            <li data-id=${id} class=title>${name}</li><li>Release date: ${release_date}</li>
+            <li>Total tracks: ${total_tracks}</li>
+            </div>`)
 
             $item.click(() => {
                 const id = $item.data('id')
@@ -91,11 +104,10 @@ class AlbumPanel extends Panel {
             })
 
             this.__$list__.append($item)
-        }
-        )
+        })
     }
 
-    set onAlbumSelected (callback) {
+    set onAlbumSelected(callback) {
         this.__onAlbumSelected__ = callback
     }
 
@@ -117,29 +129,18 @@ class TrackPanel extends Panel {
     }
 
     set tracks(tracks) {
-        tracks.forEach(({ id, name}) => {
-            const $item = $(`<li data-id=${id}>${name}<audio src="" controls></audio></li>`)
-
-            $item.click(() => {
-                const id = $item.data('id')
-                this.__onPlayTrack__(id)
-
-            })
+        tracks.forEach(({ id, name, preview_url, track_number, duration_ms }) => {
+            const min = Math.floor((duration_ms/1000/60) << 0)
+            const sec = Math.floor((duration_ms/1000) % 60)
+            const $item = $(`<div class="item"><li data-id=${id} class="title" id="track">${track_number} - ${name}</li>
+            <li><audio src="${preview_url}" controls></audio></li>
+            <li>Duration: ${min}:${sec}</li>
+    </div>`)
 
             this.__$list__.append($item)
         })
     }
-    clear () {
+    clear() {
         this.__$list__.empty()
-    }
-
-    set onPlayTrack (track) {
-        this.__onPlayTrack__ = track
-    }
-
-    set play (track) {
-        const $audio = $item.find('audio')
-
-        $audio.play(track)
     }
 }

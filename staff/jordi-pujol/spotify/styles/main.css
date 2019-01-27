@@ -1,5 +1,46 @@
-main {
-  background-color: #10CA59;
+html {
+  height: 100%;
+}
+html body {
+  background-image: url("https://sistemasyserviciosaudio.com/wp-content/uploads/2013/09/The-best-sensitive-hd-music-wallpapers-5-tumblr-life-2.png");
+  background-size: cover;
+  height: 100%;
+  color: white;
+}
+html body h1 {
+  padding: 0.5em;
+}
+html h3 {
+  padding: 1em 1em;
+}
+html .icon {
+  width: 23px;
+}
+html .receivedImg {
+  width: 350px;
+  height: 350px;
+  padding-right: 1em;
+}
+html ul {
+  list-style: none;
+}
+html ul .item {
+  padding-bottom: 2em;
+}
+html ul .item .title {
+  font-size: 20px;
+  max-width: 350px;
+}
+html ul .item #track {
+  padding-bottom: 1em;
+}
+html .btn {
+  width: 120px;
+  height: 40px;
+}
+html audio {
+  width: 500px;
+  padding-left: 0.5em;
 }
 
 /*# sourceMappingURL=main.css.map */

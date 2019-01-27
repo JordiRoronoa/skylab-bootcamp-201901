@@ -67,23 +67,4 @@ const spotifyApi = {
             .then(({ items }) => callback(undefined, items))
             .catch(callback)
     },
-        /**
-     * Plays tracks from album.
-     * 
-     * @param {string} artistId - The albums to retrieve tracks from.
-     * @param {*} callback - callback - The expression to evaluate on response. If error first 
-     * argument informs the error message, othwerwise first argument is undefined and second argument provides the matching 
-     * results.
-     */
-    playTrack(trackId, callback) {
-        fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
-            method: 'GET',
-            headers: {
-                authorization: `Bearer ${this.token}`
-            }
-        })
-            .then(res => res.json())
-            .then(({ items }) => callback(undefined, items))
-            .catch(callback)
-    }
 }

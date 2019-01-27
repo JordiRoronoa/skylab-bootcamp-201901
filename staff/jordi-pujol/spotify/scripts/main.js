@@ -1,4 +1,4 @@
-spotifyApi.token = 'BQBw-22Mn1xubAZsFPVi4_oMIdTt-5L8k57ku79COWNamlS9_bLFTlIq6jZD-y6eA8m9yW1n7ZsUX0HtF1q1OGjim9XvoU46eTmEvGjUTV_UHNX7au7uVIKT0nPvZPnEmKxzwzgxL3OJbBI'
+spotifyApi.token = 'BQBySmLGG86CzU0sTGCqRzcM8tUXHcc3ctkTQ8YuViKp3L-xfxC5oBj6366HxhxTCuTM-mDr57A4wP2o-7anNu5OFgBApfc--7e16FMC2tuHiswS9ASYwJK7FhRn81dZls3q37xU8LnSj7k'
 
 const searchPanel = new SearchPanel
 const artistsPanel = new ArtistsPanel
@@ -28,8 +28,7 @@ searchPanel.onSearch = function (query) {
                 trackPanel.clear()
 
                 albumPanel.hide()
-                trackPanel.hide
-                    ()
+                trackPanel.hide()
 
                 artistsPanel.artists = artists
 
@@ -82,21 +81,6 @@ albumPanel.onAlbumSelected = function (albumId) {
             }
             
         })
-    } catch (err) {
-    }
-}
-
-trackPanel.onPlayTrack = function (trackId) {
-
-    try {
-        logic.playTrack(trackId, function (error, track) {
-            if (error) searchPanel.error = error.message
-            else {
-
-                trackPanel.play = track
-            }
-        })
-
     } catch (err) {
     }
 }
