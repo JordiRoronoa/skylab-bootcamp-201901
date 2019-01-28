@@ -1,12 +1,16 @@
-spotifyApi.token = 'BQCsl85neJTaONIQFPCBdLoPriecwLZW-cpJFqMY_qD7WYkKFHysHOJvNee-Cr0Rx2cdVwWY0xfItgiFfQZ_duJNIpffn6p4imWD-pbNLaNGj_KIVSsnwLdG3fvFqjNw3P9eq1CTc-4fjpI'
+spotifyApi.token = 'BQDEfriF8bqZP2LvOtKiGil0R3fNNbUwkWFS7FfMu5GwupC63W2CCnUiVBu7Weu_5MJm95gU61eVA6rpDhaR3NicJLIWTpcMAD1n11DTub6qCrcDV7rTAT4FzEeGCGkEc1D35ujS28HLyq4'
 
 const searchPanel = new SearchPanel
 const artistsPanel = new ArtistsPanel
 const albumPanel = new AlbumPanel
 const trackPanel = new TrackPanel
+const loginPanel = new LoginPanel
+const registerPanel = new RegisterPanel
 
 const $root = $('#root')
 
+searchPanel.hide()
+registerPanel.hide()
 artistsPanel.hide()
 albumPanel.hide()
 trackPanel.hide()
@@ -15,6 +19,50 @@ $root.append(searchPanel.$container)
 $root.append(artistsPanel.$container)
 $root.append(albumPanel.$container)
 $root.append(trackPanel.$container)
+$root.append(loginPanel.$container)
+$root.append(registerPanel.$container)
+
+loginPanel.onLogin = function (email, password) {
+    try {
+        logic.login(email, password, function (user) {
+            loginPanel.hide();
+            loginPanel.clear();
+
+            // homePanel.user = user;
+            searchPanel.show();            
+
+        });
+    } catch (err) {
+        loginPanel.error = err.message;
+    }
+};
+
+loginPanel.onGoToRegister = function () {
+    loginPanel.hide();
+    loginPanel.clear();
+
+    registerPanel.show();
+};
+
+registerPanel.onRegister = function (name, surname, email, password, passwordConfirmation) {
+    try {
+        logic.register(name, surname, email, password, passwordConfirmation, function () {
+            registerPanel.hide();
+            registerPanel.clear();
+
+            loginPanel.show();
+        });
+    } catch (err) {
+        registerPanel.error = err.message;
+    }
+};
+
+registerPanel.onGoToLogin = function () {
+    registerPanel.hide();
+    registerPanel.clear();
+
+    loginPanel.show();
+};
 
 searchPanel.onSearch = function (query) {
 

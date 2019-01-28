@@ -27,6 +27,9 @@ html ul {
 html ul .item {
   padding-bottom: 2em;
 }
+html ul .item:hover {
+  cursor: pointer;
+}
 html ul .item .title {
   font-size: 20px;
   max-width: 350px;
