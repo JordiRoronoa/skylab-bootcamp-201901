@@ -49,7 +49,7 @@ class ArtistsPanel extends Panel {
     <button type="submit" class="btn btn-info">Go back</button>
     <h3>Artists</h3>
     <ul class =row container></ul>
-</section`))
+</section>`))
 
         this.__$list__ = this.$container.find('ul')
         this.__$buttonBack__ = this.$container.find('button')
