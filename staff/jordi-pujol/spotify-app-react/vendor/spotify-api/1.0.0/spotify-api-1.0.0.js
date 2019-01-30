@@ -17,7 +17,7 @@ const spotifyApi = {
      * results.
      */
     searchArtists(query, callback) {
-        fetch(`https://api.spotify.com/v1/search?q=`+ {query} +`&type=artist`, {
+        fetch(`https://api.spotify.com/v1/search?q=${query}&type=artist`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${this.token}`
@@ -37,7 +37,7 @@ const spotifyApi = {
      * results.
      */
     retrieveAlbums(artistId, callback) {
-        fetch(`https://api.spotify.com/v1/artists/` + {artistId} + `/albums`, {
+        fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${this.token}`

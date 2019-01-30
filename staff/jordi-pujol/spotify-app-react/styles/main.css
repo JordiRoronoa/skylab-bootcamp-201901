@@ -45,5 +45,11 @@ html audio {
   width: 500px;
   padding-left: 0.5em;
 }
+html .search {
+  padding-top: 5em;
+}
+html .like {
+  padding-bottom: 40px;
+}
 
 /*# sourceMappingURL=main.css.map */
