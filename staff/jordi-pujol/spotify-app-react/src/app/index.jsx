@@ -94,7 +94,7 @@ class App extends React.Component {
             {searchVisible && <Search onSearch={handleSearch} />}
             {artistVisible && <Artist artists={artists} onClickArtist={handleDisplayAlbums} onClickGoBacktoSearch={handleGoBacktoSearch} />}
             {albumVisible && <Album albums={albums} onClickAlbum={handleDisplayTracks} onClickGoBacktoArtists={handleGoBacktoArtists}/>}
-            {trackVisible && <Track tracks={tracks} onClickGoBacktoAlbums={handleGoBacktoAlbums} onClickAddFavorite={}/>}
+            {trackVisible && <Track tracks={tracks} onClickGoBacktoAlbums={handleGoBacktoAlbums}/>}
         </main>
     }
 }
