@@ -1,5 +1,5 @@
-import users from './data'
-import spotifyApi from './spotify-api-1.0.0'
+import users from '../user-api'
+import spotifyApi from '../spotify-api'
 
 const logic = {
 
