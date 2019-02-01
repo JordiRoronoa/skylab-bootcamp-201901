@@ -3,10 +3,8 @@
 import userApi from ".";
 
 describe('user api', () =>{
-    const username = `jordipujol-${Math.random()}`
-    const password = '123'
-    let id =''
-    let token =''
+    const username = `jordipujolooo-${Math.random()}`
+    const password = '1234'
 
     describe('register', ()=>{
 
@@ -39,7 +37,7 @@ describe('user api', () =>{
                 .catch(error => expect(error).toBeUndefined())
         )
 
-        it ('should not return a token if user not registered',() =>
+        it ('should not return a token if user is not registered',() =>
             userApi.authorize('potato', password)
                 .then ( ()=> {
                 throw Error ('should not have passed by here')    
@@ -48,7 +46,7 @@ describe('user api', () =>{
                     expect(error).toBeDefined()
                     expect(error.message).toBe(`user with username \"${'potato'}\" does not exist`)
 
-                })        
+                })
         )
     })
 
@@ -105,5 +103,33 @@ describe('user api', () =>{
             })  
         )   
         )
+    })
+
+    describe ('remove', () => {
+
+    it('should succeed on correct data', () =>
+        userApi.authorize(username, password)
+        .then((data) => 
+            userApi.remove (data.id, data.token, username, password))
+            .then( res => {
+                expect(res).toBeTruthy()
+                return userApi.register(username, password)})
+                    .then(id => expect(id).toBeDefined())
+            .catch(error => {
+                expect(error).toBeUndefined()
+            })
+        )
+
+    it('should fail when username does not exists', () =>
+        userApi.authorize(username, password)
+        .then((data) =>
+            userApi.remove(data.id, data.token, 'potato', password))
+            .then( () => {
+                throw Error ('should not have passed by here')})
+        .catch(error => {
+            expect(error).toBeDefined()
+            expect(error.message).toBe('username and/or password wrong')
+        })
+    )
     })
 })
