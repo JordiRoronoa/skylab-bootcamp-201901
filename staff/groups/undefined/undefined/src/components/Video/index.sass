@@ -1,4 +1,11 @@
 .video
+    -webkit-transition: all 1s ease
+        -moz-transition: all 1s ease
+            -o-transition: all 1s ease
+        -ms-transition: all 1s ease
+            transition: all 1s ease
+    cursor: pointer
+
     & .card-content
         padding: 20px 0px 5px 0px
         background-color: whitesmoke
@@ -7,3 +14,6 @@
     & .tags
         display:flex
         justify-content: center
+
+.video:hover
+    border: 40px solid white

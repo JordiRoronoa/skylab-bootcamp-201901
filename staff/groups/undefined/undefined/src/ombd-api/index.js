@@ -47,11 +47,11 @@ const omdbApi = {
      * 
      **/
 
-    retrieveItem(itemId) {
+    retrieveItem(itemId, plot) {
         if (typeof itemId !== 'string') throw TypeError(`${itemId} is not a string`)
         if (!itemId.trim().length) throw Error('itemId is empty')
 
-        return fetch(`${this.url}&i=${itemId}`)
+        return fetch(`${this.url}&i=${itemId}&plot=${plot}`)
             .then(item => item.json())
             .then(response => {                
                 if (response.Response === 'False') throw Error(response.Error)                

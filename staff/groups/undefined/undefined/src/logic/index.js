@@ -217,12 +217,12 @@ const logic = {
      **/
 
 
-    retrieveVideo(videoId) {
+    retrieveVideo(videoId, plot) {
         if (typeof videoId !== 'string') throw TypeError(`${videoId} is not a string`)
 
         if (!videoId.trim().length) throw Error('videoId is empty')
         
-        return ombdApi.retrieveItem(videoId) 
+        return ombdApi.retrieveItem(videoId, plot) 
         
     }
     

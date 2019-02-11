@@ -10,7 +10,7 @@ class Favorite extends Component {
 
     componentDidMount () {
 
-        logic.retrieveVideo(this.props.video)
+        logic.retrieveVideo(this.props.video, 'full')
             .then(details => {
                 this.setState({ videoSelected: details}) })
             .catch( ({message}) => {
