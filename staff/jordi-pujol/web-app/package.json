@@ -17,7 +17,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "isomorphic-fetch": "^2.2.1",
     "nodemon": "^1.18.10",
     "parse-body": "^1.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
   }
 }
