@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "spotify-api",
   "version": "1.4.0",
   "description": "## server",
   "main": "index.js",
@@ -8,8 +8,8 @@
     "watch": "nodemon src",
     "debug": "node debug src",
     "test": "mocha src/**/*.spec.js",
-    "test-debug": "mocha debug src/**/*.spec.js",
-    "test-coverage": "nyc --reporter=html --reporter=text mocha src/**/*.spec.js"
+    "test-debug": "mocha debug src/**/**/*.spec.js",
+    "test-coverage": "nyc --reporter=html --reporter=text mocha src/**/**/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,9 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "isomorphic-fetch": "^2.2.1",
-    "npm": "^6.8.0"
+    "npm": "^6.8.0",
+    "nyc": "^13.3.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "expect": "^24.1.0"

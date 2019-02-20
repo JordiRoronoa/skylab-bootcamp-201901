@@ -102,6 +102,12 @@ const logic = {
         if (!artistId.trim().length) throw Error('artistId is empty')
 
         return spotifyApi.retrieveArtist(artistId)
+        // TODO once artistComment is already implemented
+            // .then(artist =>
+            //     artistComment.find({ artistId: artist.id })
+            //         .then(comments => artist.comments = comments)
+            //         .then(() => artist)
+            // )
     },
 
     /**
