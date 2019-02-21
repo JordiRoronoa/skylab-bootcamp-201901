@@ -6,15 +6,22 @@ const artistComment = {
     file: 'artist-comments.json',
 
     __load__(file) {
+        if (typeof file !== 'string') throw TypeError(`${file} is not a string`)
+        if (!file.trim().length) throw Error('file is empty')
+
         return fsp.readFile(file)
             .then(content => JSON.parse(content))
     },
 
     __save__(file, comments) {
+        if (typeof file !== 'string') throw TypeError(`${file} is not a string`)
+        if (!file.trim().length) throw Error('file is empty')
+
         return fsp.writeFile(file, JSON.stringify(comments, null, 4))
     },
 
     add(comment) {
+        
         // TODO validate comment (should all field values and types)
 
         const file = path.join(__dirname, this.file)

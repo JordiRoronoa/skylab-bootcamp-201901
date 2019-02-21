@@ -17,6 +17,8 @@ module.exports = {
 
     retrieveTracks: require('./retrieve-tracks'),
 
-    retrieveTrack: require('./retrieve-track')
+    retrieveTrack: require('./retrieve-track'),
+
+    addCommentToArtist: require('./add-comment-artist')
 
 }
