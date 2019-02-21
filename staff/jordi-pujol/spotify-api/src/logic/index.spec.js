@@ -321,6 +321,91 @@ describe('logic', () => {
         )
     })
 
+    describe('add comment to artist', () => {
+        const name = 'Manuel'
+        const surname = 'Barzi'
+        const email = `manuelbarzi@mail.com-${Math.random()}`
+        const password = '123'
+        const artistId = '6tbjWDEIzxoDsBA1FuhfPW' // madonna
+        const comment = `comment ${Math.random()}`
+        let _id, _token
+
+        beforeEach(() =>
+            // FATAL each test should test ONE unit
+            // logic.registerUser(name, surname, email, password, passwordConfirm)
+            //     .then(() => logic.authenticateUser(email, password))
+            userApi.register(name, surname, email, password)
+                .then(() => userApi.authenticate(email, password))
+                .then(({ id, token }) => {
+                    _id = id
+                    _token = token
+                })
+        )
+
+        it('should succeed on correct data', () =>
+            logic.addCommentToArtist(_id, _token, artistId, comment)
+                .then(id => {
+                    expect(id).toBeDefined()
+
+                    return artistComment.retrieve(id)
+                        .then(_comment => {
+                            expect(_comment.id).toBe(id)
+                            expect(_comment.userId).toBe(_id)
+                            expect(_comment.artistId).toBe(artistId)
+                            expect(_comment.text).toBe(comment)
+                        })
+                })
+        )
+    })
+
+    describe('list comments from artist', () => {
+        const name = 'Manuel'
+        const surname = 'Barzi'
+        const email = `manuelbarzi@mail.com-${Math.random()}`
+        const password = '123'
+        const artistId = '6tbjWDEIzxoDsBA1FuhfPW' // madonna
+        const text = `comment ${Math.random()}`
+        const text2 = `comment ${Math.random()}`
+        const text3 = `comment ${Math.random()}`
+        let comment, comment2, comment3
+        let _id, _token
+
+        beforeEach(() =>
+            // FATAL each test should test ONE unit
+            // logic.registerUser(name, surname, email, password, passwordConfirm)
+            //     .then(() => logic.authenticateUser(email, password))
+            userApi.register(name, surname, email, password)
+                .then(() => userApi.authenticate(email, password))
+                .then(({ id, token }) => {
+                    _id = id
+                    _token = token
+                })
+                .then(() => artistComment.add(comment = { userId: _id, artistId, text }))
+                .then(() => artistComment.add(comment2 = { userId: _id, artistId, text: text2 }))
+                .then(() => artistComment.add(comment3 = { userId: _id, artistId, text: text3 }))
+        )
+
+        it('should succeed on correct data', () =>
+            logic.listCommentsFromArtist(artistId)
+                .then(comments => {
+                    expect(comments).toBeDefined()
+                    expect(comments.length).toBe(3)
+
+                    comments.forEach(({ id, userId, artistId: _artistId, date }) => {
+                        expect(id).toBeDefined()
+                        expect(userId).toEqual(_id)
+                        expect(_artistId).toEqual(artistId)
+                        expect(date).toBeDefined()
+                        expect(date instanceof Date).toBeTruthy()
+                    })
+
+                    expect(comments[0].text).toEqual(text)
+                    expect(comments[1].text).toEqual(text2)
+                    expect(comments[2].text).toEqual(text3)
+                })
+        )
+    })
+
     describe('retrieve albums', () => {
         it('should succeed on mathing query', () => {
             const artistId = '6tbjWDEIzxoDsBA1FuhfPW' // madonna
