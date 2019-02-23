@@ -7,7 +7,7 @@ module.exports = {
 
     notFound: require('./not-found'),
 
-    searchArtists: require('./search-artists'),
+    searchArtists: require('./search-artist'),
 
     retrieveArtist: require('./retrieve-artist'),
 

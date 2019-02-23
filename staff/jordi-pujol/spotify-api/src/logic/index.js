@@ -2,6 +2,8 @@
 
 const spotifyApi = require('../spotify-api')
 const userApi = require('../user-api')
+const users = require('../data/users')
+const jwt = require('jsonwebtoken')
 
 /**
  * Abstraction of business logic.
@@ -39,8 +41,8 @@ const logic = {
 
         // if (password !== passwordConfirmation) throw Error('passwords do not match')
 
-        return userApi.register(name, surname, email, password)
-            // .then(() => { })
+        // return userApi.register(name, surname, email, password)
+        return users.add({ name, surname, email, password })
     },
 
     /**
@@ -50,7 +52,6 @@ const logic = {
      * @param {string} password 
      */
     authenticateUser(email, password) {
-        debugger
         if (typeof email !== 'string') throw TypeError(email + ' is not a string')
 
         if (!email.trim().length) throw Error('email cannot be empty')
@@ -59,23 +60,71 @@ const logic = {
 
         if (!password.trim().length) throw Error('password cannot be empty')
 
-        return userApi.authenticate(email, password)
+        // return userApi.authenticate(email, password)
+        // TODO redo authenticate here, using users driver to find user by email, verify password, generate token using jsonwebtoken
+        // return users.findByEmail(email)
+            // .then(user => {
+            //  if (!user) throw Error(`user with email ${email} not found`)
+            //  if (user.password !== password) throw Error('wrong credentials')
+            //  create token... etc, etc, etc...
+            // })
+
+        return users.findByEmail(email)
+            .then(user => {
+                if (!user) throw Error (`user with email ${email} not found`)
+                if (user.password !== password) throw Error ('wrong credentials')
+
+                let id = user.id
+                let token = jwt.sign({id: user.id}, 'brrrrrrr', { expiresIn: '48h'})
+
+                return {id, token}
+            })
     },
 
     retrieveUser(userId, token) {
-        return userApi.retrieve(userId, token)
-            .then(({ id, name, surname, username: email, favoriteArtists = [], favoriteAlbums = [], favoriteTracks = [] }) => ({
-                id,
-                name,
-                surname,
-                email,
-                favoriteArtists,
-                favoriteAlbums,
-                favoriteTracks
-            }))
+        // return userApi.retrieve(userId, token)
+        //     .then(({ id, name, surname, username: email, favoriteArtists = [], favoriteAlbums = [], favoriteTracks = [] }) => ({
+        //         id,
+        //         name,
+        //         surname,
+        //         email,
+        //         favoriteArtists,
+        //         favoriteAlbums,
+        //         favoriteTracks
+        //     }))
+
+        return users.findById(userId)
+            .then( user =>{
+                if (!user) throw Error (`user with userId ${userId} not found`)
+
+                jwt.verify(token, 'brrrrrrr', (error, decode) => {
+
+                    if (error) throw Error (error.message)
+                    if (decode.id !== userId) throw Error ('userId does not match token')
+
+                })
+                return user
+            })
     },
 
     // TODO updateUser and removeUser
+
+    updateUser (userId, token, data) {
+        return users.update(userId, data)
+            .then ( ()=> {
+                jwt.verify(token, 'brrrrrrr', (error, decode) => {
+
+                    if (error) throw Error (error.message)
+                    if (decode.id !== userId) throw Error ('userId does not match token')
+
+                })
+            })
+
+    },
+
+    // deleteUser (userId, token, username, password){
+
+    // },
 
     /**
      * Search artists.

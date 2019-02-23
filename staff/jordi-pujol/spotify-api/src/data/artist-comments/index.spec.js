@@ -10,7 +10,7 @@ describe('artist comments data', () => {
     const file = path.join(__dirname, artistComment.file)
 
     beforeEach(() => fsp.writeFile(file, JSON.stringify([])))
-
+    
     describe('__load__', () => {
         const comments = [
             {

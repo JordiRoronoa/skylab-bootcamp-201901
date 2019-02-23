@@ -1,4 +1,5 @@
 const uuid = require('uuid/v4')
+const fs = require('fs')
 const fsp = require('fs').promises // WARN need node v10+
 const path = require('path')
 
@@ -6,18 +7,26 @@ const artistComment = {
     file: 'artist-comments.json',
 
     __load__(file) {
-        if (typeof file !== 'string') throw TypeError(`${file} is not a string`)
-        if (!file.trim().length) throw Error('file is empty')
+        // return fsp.readFile(file)
+        //     .then(content => JSON.parse(content))
+        return new Promise((resolve, reject) => {
+            fs.readFile(file, (error, content) => {
+                if (error) return reject(error)
 
-        return fsp.readFile(file)
-            .then(content => JSON.parse(content))
+                resolve(JSON.parse(content))
+            })
+        })
     },
 
     __save__(file, comments) {
-        if (typeof file !== 'string') throw TypeError(`${file} is not a string`)
-        if (!file.trim().length) throw Error('file is empty')
+        // return fsp.writeFile(file, JSON.stringify(comments, null, 4))
+        return new Promise((resolve, reject) => {
+            fs.writeFile(file, JSON.stringify(comments, null, 4), error => {
+                if (error) return reject(error)
 
-        return fsp.writeFile(file, JSON.stringify(comments, null, 4))
+                resolve()
+            })
+        })
     },
 
     add(comment) {
