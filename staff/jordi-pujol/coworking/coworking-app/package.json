@@ -19,9 +19,6 @@
     "test-coverage": "npm test -- --coverage",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -29,8 +26,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "coworking-data": "file:../coworking-data",
+    "@s-ui/lint": "^2.22.0",
     "bcrypt": "^3.0.4",
+    "coworking-data": "file:../coworking-data",
     "dotenv": "^6.2.0"
   }
 }
